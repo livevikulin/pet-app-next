@@ -1,8 +1,8 @@
 import styles from "./Sidebar.module.css";
 import { FunctionComponent } from "react";
-import { IHeaderProps } from "./Header.props";
+import { ISidebarProps } from "./Sidebar.props";
 
-export const Sidebar: FunctionComponent<IHeaderProps> = ({ ...props }) => {
+export const Sidebar: FunctionComponent<ISidebarProps> = ({ ...props }) => {
     return (
         <div {...props}>
             Sidebar

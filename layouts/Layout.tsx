@@ -1,3 +1,4 @@
+import styles from "./Layout.module.css";
 import { FunctionComponent, ReactElement } from "react";
 import { ILayoutProps } from "./Layout.props";
 import { Header } from "./Header/Header";
@@ -6,14 +7,12 @@ import { Sidebar } from "./Sidebar/Sidebar";
 
 const Layout: FunctionComponent<ILayoutProps> = ({ children }) => {
     return (
-        <>
-            <Header />
-            <div>
-                <Sidebar />
-                <div>{children}</div>
-            </div>
-            <Footer />
-        </>
+        <div className={styles.wrapper}>
+            <Header className={styles.header} />
+            <Sidebar className={styles.sidebar} />
+            <div className={styles.main}>{children}</div>
+            <Footer className={styles.footer} />
+        </div>
     );
 }
 
