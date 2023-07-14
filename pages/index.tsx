@@ -1,9 +1,16 @@
-import { FunctionComponent, useState } from "react";
-import { withLayout } from "../layouts/Layout";
-import { Button, Title, Paragraph, Tag, Rating } from "../components";
+import { FunctionComponent, useState } from 'react';
+import { withLayout } from '../layouts/Layout';
+import { Button, Title, Paragraph, Tag, Rating } from '../components';
+import { GetStaticProps } from 'next'
+import axios from 'axios';
+import { IMenuItem } from '../interfaces/menu.interface'
 
+interface IHomeProps extends Record<string, unknown>{
+  menu: IMenuItem[];
+  firstCategory: number;
+}
 
-const Home: FunctionComponent = () => {
+const Home: FunctionComponent<IHomeProps> = ({ menu, firstCategory }) => {
     const [rating, setRating] = useState(4);
 
     return (
@@ -43,8 +50,28 @@ const Home: FunctionComponent = () => {
               </div>
             <Rating rating={4} />
             <Rating isEditable rating={rating} setRating={setRating} />
+          <ul>
+            {
+              menu.map((element) => <li key={element._id.secondCategory}>{element._id.secondCategory}</li>)
+            }
+          </ul>
+
         </>
     )
 }
 
 export default withLayout(Home);
+
+export const getStaticProps: GetStaticProps<IHomeProps> = async () => {
+  const firstCategory = 0;
+  const { data: menu } = await axios.post<IMenuItem[]>(process.env.NEXT_PUBLIC_DOMAIN + "/api/top-page/find", {
+    firstCategory
+  });
+
+  return {
+    props: {
+      menu,
+      firstCategory
+    }
+  }
+};
